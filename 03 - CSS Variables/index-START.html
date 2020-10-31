@@ -22,6 +22,12 @@
 
   <style>
 
+    html {
+      --base: #ffc600;
+      --spacing: 10px;
+      --blur: 5px;
+    }
+
     /*
       misc styles, nothing to do with CSS variables
     */
@@ -35,6 +41,10 @@
       font-size: 50px;
     }
 
+    span {
+      color: var(--base)
+    }
+
     .controls {
       margin-bottom: 50px;
     }
@@ -42,9 +52,26 @@
     input {
       width: 100px;
     }
+
+    img {
+      padding: var(--spacing);
+      background: var(--base);
+      filter: blur(var(--blur));
+    }
   </style>
 
   <script>
+    const inputs = document.querySelectorAll("input")
+    console.log(inputs)
+
+    function handleUpdate() {
+      var suffix = this.dataset.sizing || '' // in this case 'this' refers to the input html element that the mouse event is occuring on
+      document.documentElement.style.setProperty(`--${this.name}`, this.value + suffix)
+      // documentElement refers to the the top-level root element(in this case, "html")
+    }
+
+    inputs.forEach(input => input.addEventListener('change', handleUpdate))
+    inputs.forEach(input => input.addEventListener('mousemove', handleUpdate))
   </script>
 
 </body>
